@@ -15,7 +15,7 @@ function getSeason(date) {
   if (date === undefined){
     return 'Unable to determine the time of year!';
   } else if (!(date instanceof Date)) {
-    throw new Error('Invalid date!');;
+    throw new Error('Invalid date!');
   } else {
     let month = date.getMonth();
 
