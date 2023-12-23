@@ -22,6 +22,10 @@ const { NotImplementedError } = require('../extensions/index.js');
 const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
 class VigenereCipheringMachine {
+
+    constructor(reverse = true) {
+    this.reverse = reverse;
+  }
   encrypt(message, key) {
     if (message === undefined || key === undefined) {
       throw new Error("Incorrect arguments!");
@@ -47,7 +51,7 @@ class VigenereCipheringMachine {
         encryptedMessage += alphabet[index];
       }
     }
-    return encryptedMessage;
+    return this.reverse ? encryptedMessage : encryptedMessage.split('').reverse().join('');
   }
   decrypt(message, key) {
     if (message === undefined || key === undefined) {
@@ -73,7 +77,7 @@ class VigenereCipheringMachine {
         decryptedMessage += alphabet[finalIndex];
       }
   }
-    return decryptedMessage;
+    return this.reverse ? decryptedMessage : decryptedMessage.split('').reverse().join('');
   }
 }
 module.exports = {
