@@ -19,17 +19,63 @@ const { NotImplementedError } = require('../extensions/index.js');
  * reverseMachine.decrypt('AEIHQX SX DLLU!', 'alphonse') => '!NWAD TA KCATTA'
  * 
  */
+const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
 class VigenereCipheringMachine {
-  encrypt() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  encrypt(message, key) {
+    if (message === undefined || key === undefined) {
+      throw new Error("Incorrect arguments!");
+    }
+    let encryptedMessage = '';
+    let count = 0;
+    for (let i = 0; i < message.length; i++) {
+      if (!alphabet.includes(message[i].toUpperCase())) {
+        encryptedMessage += message[i];
+        count++;
+      } else {
+        let letterIndex = alphabet.indexOf(message[i].toUpperCase());
+        let keyLength = i - count;
+        let keyIndex;
+        while (keyLength >= key.length) {
+          keyLength = keyLength - key.length
+        }
+        keyIndex = alphabet.indexOf(key[keyLength].toUpperCase());
+        let index = letterIndex + keyIndex;
+        if (index >= 26) {
+          index = index - 26;
+        }
+        encryptedMessage += alphabet[index];
+      }
+    }
+    return encryptedMessage;
   }
-  decrypt() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  decrypt(message, key) {
+    if (message === undefined || key === undefined) {
+      throw new Error("Incorrect arguments!");
+    }
+    let decryptedMessage = '';
+    let count = 0;
+  for (let i = 0; i < message.length; i++) {
+      if (!alphabet.includes(message[i].toUpperCase())) {
+        decryptedMessage += message[i];
+        count++;
+      } else {
+        let letterIndex = alphabet.indexOf(message[i]);
+        let keyIndex = i - count;
+        while (keyIndex >= key.length) {
+          keyIndex = keyIndex - key.length;
+        }
+        let keyNum = alphabet.indexOf(key[keyIndex].toUpperCase());
+        let finalIndex = letterIndex - keyNum;
+        if (finalIndex < 0) {
+          finalIndex = 26 + finalIndex;
+        }
+        decryptedMessage += alphabet[finalIndex];
+      }
+  }
+    return decryptedMessage;
   }
 }
-
 module.exports = {
   VigenereCipheringMachine
 };
