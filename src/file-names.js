@@ -21,6 +21,7 @@ function renameFiles(names) {
   for (let i = 0; i < names.length; i++) {
     if (!finalArray.includes(names[i])) {
       finalArray.push(names[i]);
+      count = 1;
     } else {
       finalArray.push(`${names[i]}(${count})`);
       count++;
